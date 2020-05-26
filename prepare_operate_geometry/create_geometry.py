@@ -1,5 +1,4 @@
 import Rhino.Geometry as rg
-import rhinoscriptsyntax as rs
 
 
 class Create_Geometry():
@@ -41,3 +40,21 @@ class Create_Geometry():
         box_ = rg.Brep.CreateFromBox([p0, p1, p2, p3, p4, p5, p6, p7])
         
         return box_
+
+
+    def create_surface_from_polylines(self, polylines):
+
+        ### Polyline to Surface
+        surfaces = []
+        
+        for i in xrange(len(polylines)):
+            
+            pl = polylines[i]
+            crv = rg.Polyline.ToNurbsCurve(pl)
+            p = rg.Brep.CreatePlanarBreps(crv)
+            # print(p)
+            
+            surfaces.append(p[0])
+        
+        return surfaces
+        
